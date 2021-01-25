@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <%- include ('../partials/head.ejs') %>
+  <script src="https://code.jquery.com/jquery-3.3.1.js"></script>
+
+  <body>
+    <!-- Main Container -->
+    <div class="container">
+      <!-- Navigation -->
+      <header><%- include ('../partials/header') %></header>
+
+      <!-- Parallax Section -->
+      <section class="banner">
+        <form class="delete-form" role="form" autocomplete="off">
+          <div class="form-group row">
+            <label class="col-lg-3 col-form-label form-control-label"
+              >ID user</label
+            >
+            <div class="col-lg-9">
+              <input class="form-control" id="id" type="text" name="id" />
+            </div>
+          </div>
+
+          <input type="submit" class="btn btn-primary" value="Delete user" />
+        </form>
+        <% if(deleted !== null){ %>
+        <p>User deleted successfully</p>
+        <% } %> <% if(error !== null){ %>
+        <p>ERROR <%= error %>, please try again</p>
+        <% } %>
+      </section>
+      <script>
+        $(document).ready(function () {
+          $(".delete-form").on("click", function (e) {
+            e.preventDefault();
+            var id = $("#id").val();
+            console.log(id);
+            $.ajax({
+              type: "DELETE",
+              url: "/delete/" + id,
+              success: (data) => {
+                console.log(data);
+              },
+              error: function (err) {
+                console.log(err);
+              },
+            });
+          });
+        });
+      </script>
+
+      <%- include ('../partials/footer') %>
+    </div>
+    <!-- Main Container Ends -->
+  </body>
+</html>
